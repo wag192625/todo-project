@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">할 일 추가</h5>
+    <form method="post">
+        {% csrf_token %}
+        <!-- pybo/forms에서 가져옴 -->
+        <table>
+        <!-- {{ form.as_p }} -->
+            <form action="{% url 'pybo:add_todo' %}" method="post">
+                <div><select name="importance" id="importance" class="form-select form-select-sm" aria-label=".form-select-sm example"
+                    value="{{ form.importance.value|default_if_none:'' }}">
+                    <option selected>중요도</option>
+                    <option value="1">★</option>
+                    <option value="2">★★</option>
+                    <option value="3">★★★</option></select>
+                </div>
+                <div>
+                <textarea  class="form-control" name="text" id="text" aria-label="할 일"
+                    value="{{ form.text.value|default_if_none:'' }}"></textarea>
+                </div>
+            </form>
+        </table>
+        <button type="submit" class="btn btn-primary">저장하기</button>
+    </form>
+</div>
+{% endblock %}
