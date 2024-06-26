@@ -14,24 +14,58 @@
 {% block content %}
 <div class="container">
     <div class="row align-item-start">
-    {% if todo_list %}
-        <ul>
-        {% for todo in todo_list %}
-            <li>
-                <!-- <a href="/pybo/{{ todo.id }}">{{ todo.text }}</a> -->
-                 
-                 <p>{% for i in "★"|slice:todo.importance %}
-                    ★
-                {% endfor %} {{ todo.text }}</p>
-            </li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>질문이 없습니다.</p>
-    {% endif %}
+      <div class="col">
+        {% if todo_list %}
+            <ul class="list-group">
+            {% for todo in todo_list %}
+                <li class="list-group-item">
+                    <p>{% if todo.importance == true %}
+                        todo.importance * '★'
+                    {% endif %} {{ todo.text }}</p>
+                    <div class="my-3" style="float:right">
+                      <a href="{% url 'pybo:edit_todo' todo.id  %}" 
+                        class="btn btn btn-outline-primary">수정</a>
+                  </div>
+                </li>
+                
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>질문이 없습니다.</p>
+        {% endif %}
+        </div>
+        <div class="col" style="max-width: 300px;">
+        
+        </div>
     </div>
+    
 </div>
-<a href="{% url 'pybo:add_todo' %}" class="btn btn-primary">질문 등록하기</a>
+<a href="{% url 'pybo:add_todo' %}" class="btn btn-primary">할 일 등록</a>
+<div>
+  <form action="{% url 'pybo:save_news' %}" method="post">
+    {% csrf_token %}
+  <!-- 크롤링한 뉴스.py를 db에 저장하지 않고 그대로 출력(views에만 따로 적용했음)-->
+    {% for news in newsList %}  
+    <div class="row">
+      <div class="col-3 p-3"><a href="{{ news.link }}"><img src="{{ news.image_s }}"></img></a></div>
+    <div class="col-9 p-3" style="font-size:14px;">
+      <div class="text-secondary" style="font-size:12px;">{{ news.writing }}</div>
+      <a href="{{ news.link }}"><b>{{ news.title }}</b></a><br>
+      <div class="mt-2" style="font-size: 12px">{{ news.content }}</div>
+    </div>
+    <div>
+      <button type="submit" class="btn btn-primary">저장하기</button>
+      <!-- <a href="{% url 'pybo:save_news' %}" class="btn btn-primary">뉴스 저장</a> -->
+    </div>
+    {%endfor%}
+  </form>
+</div>
+
+<!-- <textarea  class="form-control" name="text" id="text" aria-label="할 일"
+value="{{ form.text.value|default_if_none:'' }}"></textarea> -->
+
+<!-- <a href="{% url 'pybo:save_news' news.title news.content news.writing news.image news.link %}" class="btn btn-primary">뉴스 저장</a> -->
+
 {% endblock %}
 
 

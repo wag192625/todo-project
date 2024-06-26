@@ -2,12 +2,9 @@
 {% block content %}
 <div class="container">
     <h5 class="my-3 border-bottom pb-2">할 일 추가</h5>
-    <form method="post">
-        {% csrf_token %}
-        <!-- pybo/forms에서 가져옴 -->
-        <table>
-        <!-- {{ form.as_p }} -->
             <form action="{% url 'pybo:add_todo' %}" method="post">
+                {% csrf_token %}
+                <table>
                 <div><select name="importance" id="importance" class="form-select form-select-sm" aria-label=".form-select-sm example"
                     value="{{ form.importance.value|default_if_none:'' }}">
                     <option selected>중요도</option>
@@ -19,9 +16,10 @@
                 <textarea  class="form-control" name="text" id="text" aria-label="할 일"
                     value="{{ form.text.value|default_if_none:'' }}"></textarea>
                 </div>
+                <!-- <div > 타이머 구간 </div> -->
+                <button type="submit" class="btn btn-primary">저장하기</button>
+                </table>
             </form>
-        </table>
-        <button type="submit" class="btn btn-primary">저장하기</button>
     </form>
 </div>
 {% endblock %}
