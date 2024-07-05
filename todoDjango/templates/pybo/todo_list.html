@@ -25,7 +25,7 @@
                     <div class="my-3" style="float:right">
                       <a href="{% url 'pybo:edit_todo' todo.id  %}" 
                         class="btn btn btn-outline-primary">수정</a>
-                  </div>
+                    </div>
                 </li>
                 
             {% endfor %}
@@ -64,9 +64,9 @@
 <!-- <textarea  class="form-control" name="text" id="text" aria-label="할 일"
 value="{{ form.text.value|default_if_none:'' }}"></textarea> -->
 
-<!-- <a href="{% url 'pybo:save_news' news.title news.content news.writing news.image news.link %}" class="btn btn-primary">뉴스 저장</a> -->
 
 {% endblock %}
+<!-- <a href="{% url 'pybo:save_news' news.title news.content news.writing news.image news.link %}" class="btn btn-primary">뉴스 저장</a> -->
 
 
 <!-- 

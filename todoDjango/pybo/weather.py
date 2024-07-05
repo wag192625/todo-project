@@ -9,13 +9,15 @@ from datetime import datetime
 now = datetime.now().date()
 # 오류 안나게 - 제거
 tonow = str(now).replace('-','')
+# 실시간으로 
+
 
 # 초단기예보
 url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst'
 # 단기예보
 # url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'
 params ={'serviceKey' : 'QCm74+CmnGEJDOzL+wIQlr5LUEwzfwgYfGGBPpAaEE2fkCqaJ7PKQD9dbuf0S5jOQxE5BRmyZmkO6cMDg+O72A==',
-        'pageNo' : '1', 'numOfRows' : '1000', 'dataType' : 'XML', 'base_date' : tonow, 'base_time' : '0500', 'nx' : '63', 'ny' : '110' }
+        'pageNo' : '1', 'numOfRows' : '1000', 'dataType' : 'XML', 'base_date' : tonow, 'base_time' : '5000', 'nx' : '63', 'ny' : '110' }
 
 def forecast():
     response = requests.get(url, params=params)

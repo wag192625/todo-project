@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Todo(models.Model) :
@@ -32,7 +33,17 @@ class NewsSave(models.Model) :
     def __str__(self):
         return self.news_title
 
-# class weatherDB(models.Model):
+class Event(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    @property
+    def get_html_url(self):     # html에 일정의 title을 가져와서 적용
+        url = reverse('pybo:event_edit', args=(self.id,))
+        return f'<a href="{url}"> {self.title} </a>'
+    
+# class weatherDB(models.Model):    # api에서 그냥 가져와서 필요 x
 #     timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)
 #     temp = models.IntegerField(blank=True, null=True)   # 온도
 #     humidity = models.IntegerField(blank=True, null=True)   #습도

@@ -1,6 +1,6 @@
 from django import forms
-from pybo.models import Todo
-from pybo.models import NewsSave
+from pybo.models import *
+from django.forms import ModelForm, DateInput
 
 class TodoForm(forms.ModelForm):
     class Meta :
@@ -17,6 +17,28 @@ class NewsForm(forms.ModelForm):
         fields = ['news_title','news_content','news_writing','news_image','news_link']
 
 
+class EventForm(ModelForm):
+  class Meta:
+    model = Event
+    # datetime-local is a HTML5 input type, format to make date time show on fields
+    widgets = {
+      'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+      'end_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+    }
+    fields = '__all__'
+
+  def __init__(self, *args, **kwargs):
+    super(EventForm, self).__init__(*args, **kwargs)
+    # input_formats to parse HTML5 datetime-local input to datetime field
+    self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
+    self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
+
+
+
+
+
+
+    
 #  importance = models.IntegerField(default= '1',     # 중요도
 #                                      choices=[
 #                                          (1,'1'),
